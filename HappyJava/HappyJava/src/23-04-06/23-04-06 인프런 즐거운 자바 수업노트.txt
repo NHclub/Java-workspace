@@ -1,0 +1,93 @@
+# 23-04-06
+---
+## 주석문
+- /** … */ 이 구조를 자바 Doc 주석문이라고 부른다
+- 생성하고싶으면 쉬프트 두번 누른 후 generate java doc 으로 가능
+| annotaion | 설명 |
+| --- | --- |
+| @version | 클래스나 메소드의 버전 |
+| @author | 작성자 |
+| @deprecated | 더이상 사용되지 않거나, 삭제될 예정 |
+| @since | 언제 생성, 추가, 수정 되었는가? |
+| @see | 외부 링크나 텍스트, 다른 필드나 메소드를 링크할 때 사용 |
+| @link | see와 동일한 기능. 링크 제공 |
+| @exception | 발생할 수 있는 Exception 정의 |
+
+## Error의 종류
+- 컴파일 에러: 컴파일시 발생하는 에러
+- 런타임 에러: 실행시 발생하는 에러
+- Error: 수습할 수 없는 심각한 오류
+- Exception(예외): 예외처리를 통해 수습할 수 있는 덜 심각한 오류
+- 메모리 부족, 스택 오버플로우 등이 발생하여 프로그램이 죽는 것은 프로그래머가 제어할 수 없다.
+
+## 예외 처리하기(try-catch)
+class ExceptionObj1{
+    public int divide(int i ,int k){
+        int value = 0;
+        try{
+            value = i / k ;
+        }catch(ArithmeticException ex){ // ex는 exception타입을 참조하는 변수
+            System.out.println("0으로 나눌수 없습니다."); 
+            System.out.println(ex.toString()); // exception 이유 출력
+        }
+        return value;
+    }
+}
+-0은 나눌 수 없기에 답이 없어야하는데 0을 return 해주는 치명적인 오류가 있음
+
+## 예외 떠넘기기(throws)
+리턴타입 메소드명(아규먼트 리스트) throws Exception클래스명1, Exception클래스명2 ...{
+...
+}
+
+public class Exception01 {
+    public static void main(String[] args) {
+        ExceptionObj1 exobj = new ExceptionObj1();
+        try{
+            int value = exobj.divide(10, 0);
+            System.out.println(value);
+        }catch(ArithmeticException ex){
+            System.out.println("0으로 나눌수 없습니다");
+        }
+    }
+}
+
+class ExceptionObj1{
+    public int divide(int i ,int k) throws ArithmeticException{
+        int value = 0;
+        value = i / k ;
+        return value;
+    }
+}
+
+## RuntimeException과 CheckedException
+- RuntimeException을 상속받고 있는 Exception은 전부 RuntimeException 아닌경우는 CheckedException.
+- 다이어그램을 확인해보고 상속받고 있는 클래스들중에 RuntimeException이 없으면 CheckedException 이며, CheckedException는 무조건 예외처리를 해주어야함.
+
+## 다중 Exception 처리
+- 프로그램에 발생하는 특정 Exception을 처리 하고 싶을 때 특정 Exception예외처리를 해준다. 잘 모르는 Exception이 발생할 경우를 대비하여 모든 Exception의 상위 클래스인 Exception으로 예외처리 할 수 있다.
+
+## Enum
+- 서로 연관된 상수들의 집합
+- 클래스를 생성하는 것과 같은 방식으로 Enum을 생성한다.
+- com.example.enumtype 패키지를 생성한다
+package examples.enumtype;
+public enum Day{
+		SUNDAY,
+		MONDAY,
+		TUESDAY,
+		WEDNESDAY,
+		THURSDAY,
+		FRIDAY,
+		SATURDAY
+}
+package examples.enumtype;
+
+public class Today{
+		private Day day;
+		프로퍼티
+}
+- Enum은 생성자를 가질 수 있다. 단 생성자는 private 해야한다.
+- Enum의 생성자는 내부에서만 호출가능하다.
+- Enum안에 선언된 메소드나 변수를 가질 수 있다.
+- 또한 Object가 가지고 있는 메소드를 오버라이딩할 수도 있다.
